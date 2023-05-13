@@ -80,15 +80,18 @@
   <div id="color-sliders">
     <div class="color-slider">
       <label for="red-slider">Vermelho</label>
-      <input type="range" min="0" max="100" value="0" step="1" id="red-slider">
+      <input type="range" min="0" max="255" value="0" step="1" id="red-slider">
+      <span id="red-value">0</span> <span>%</span>
     </div>
     <div class="color-slider">
       <label for="green-slider">Verde</label>
-      <input type="range" min="0" max="100" value="0" step="1" id="green-slider">
+      <input type="range" min="0" max="255" value="0" step="1" id="green-slider">
+      <span id="green-value">0</span> <span>%</span>
     </div>
     <div class="color-slider">
       <label for="blue-slider">Azul</label>
-      <input type="range" min="0" max="100" value="0" step="1" id="blue-slider">
+      <input type="range" min="0" max="255" value="0" step="1" id="blue-slider">
+      <span id="blue-value">0</span> <span>%</span>
     </div>
   </div>
   <div class="option-buttons">
@@ -105,6 +108,9 @@
     const redSlider = document.getElementById('red-slider');
     const greenSlider = document.getElementById('green-slider');
     const blueSlider = document.getElementById('blue-slider');
+    const redValue = document.getElementById('red-value');
+    const greenValue = document.getElementById('green-value');
+    const blueValue = document.getElementById('blue-value');
     const normalOption = document.getElementById('normal-option');
     const protanopiaOption = document.getElementById('protanopia-option');
     const deuteranopiaOption = document.getElementById('deuteranopia-option');
@@ -125,35 +131,41 @@
     }
 
     function updateImageColor() {
-      const redValue = (redSlider.value / 100) * 255;
-      const greenValue = (greenSlider.value / 100) * 255;
-      const blueValue = (blueSlider.value / 100) * 255;
-      imagePreview.style.filter = `rgb(${redValue}, ${greenValue}, ${blueValue})`;
+      const red = redSlider.value;
+      const green = greenSlider.value;
+      const blue = blueSlider.value;
+      imagePreview.style.filter = `rgb(${red}, ${green}, ${blue})`;
+      redValue.textContent = red;
+      greenValue.textContent = green;
+      blueValue.textContent = blue;
     }
 
     function setSliderValues(red, green, blue) {
-      redSlider.value = red / 2.55;
-      greenSlider.value = green / 2.55;
-      blueSlider.value = blue / 2.55;
+      redSlider.value = red;
+      greenSlider.value = green;
+      blueSlider.value = blue;
+      redValue.textContent = red;
+      greenValue.textContent = green;
+      blueValue.textContent = blue;
     }
 
     function applyNormalOption() {
-      setSliderValues(100, 100, 100);
+      setSliderValues(0, 0, 0);
       updateImageColor();
     }
 
     function applyProtanopiaOption() {
-      setSliderValues(56.4, 43.16, 0);
+      setSliderValues(56, 43, 0);
       updateImageColor();
     }
 
     function applyDeuteranopiaOption() {
-      setSliderValues(62.74, 37.26, 0);
+      setSliderValues(62, 37, 0);
       updateImageColor();
     }
 
     function applyTritanopiaOption() {
-      setSliderValues(95.6, 0, 4.08);
+      setSliderValues(95, 0, 4);
       updateImageColor();
     }
 
