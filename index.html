@@ -1,101 +1,72 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Medidores de Cores</title>
+  <head>
+    <meta charset="utf-8">
+    <title>Medidores de cores</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f1f1f1;
-            margin: 0;
-            padding: 20px;
-        }
-        
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: #fff;
-            border-radius: 5px;
-            padding: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        
-        label {
-            font-weight: bold;
-        }
-        
-        input[type="range"] {
-            width: 100%;
-        }
-        
-        #imageUpload {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            margin-top: 10px;
-        }
-        
-        #updateButton {
-            display: block;
-            width: 100%;
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-top: 10px;
-        }
-        
-        img {
-            display: block;
-            max-width: 100%;
-            height: auto;
-            margin-top: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
+      #imagem {
+        max-width: 500px;
+        max-height: 500px;
+      }
+      .medidor {
+        display: inline-block;
+        width: 20%;
+        text-align: center;
+      }
+      .medidor input {
+        width: 80%;
+      }
+      .medidor label {
+        display: block;
+        margin-top: 10px;
+        font-size: 16px;
+      }
     </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Medidores de Cores</h1>
-        <div>
-            <label for="red">Vermelho:</label>
-            <input type="range" id="red" min="0" max="255" value="0" step="1">
-        </div>
-        <div>
-            <label for="green">Verde:</label>
-            <input type="range" id="green" min="0" max="255" value="0" step="1">
-        </div>
-        <div>
-            <label for="blue">Azul:</label>
-            <input type="range" id="blue" min="0" max="255" value="0" step="1">
-        </div>
-        <div>
-            <label for="imageUpload">Selecione uma imagem:</label>
-            <input type="file" id="imageUpload">
-            <button id="updateButton">Atualizar Imagem</button>
-        </div>
-        <img id="colorImage">
+  </head>
+  <body>
+    <h1>Medidores de cores</h1>
+    <input type="file" id="input-imagem">
+    <br><br>
+    <img id="imagem">
+    <br><br>
+    <div class="medidor">
+      <input type="range" min="0" max="255" value="0" id="medidor-vermelho">
+      <label for="medidor-vermelho">Vermelho</label>
     </div>
-    
+    <div class="medidor">
+      <input type="range" min="0" max="255" value="0" id="medidor-verde">
+      <label for="medidor-verde">Verde</label>
+    </div>
+    <div class="medidor">
+      <input type="range" min="0" max="255" value="0" id="medidor-azul">
+      <label for="medidor-azul">Azul</label>
+    </div>
     <script>
-        const redSlider = document.getElementById("red");
-        const greenSlider = document.getElementById("green");
-        const blueSlider = document.getElementById("blue");
-        const colorImage = document.getElementById("colorImage");
-        const imageUploadInput = document.getElementById("imageUpload");
-        const updateButton = document.getElementById("updateButton");
-        
-        redSlider.addEventListener("input", updateImageColor);
-        greenSlider.addEventListener("input", updateImageColor);
-        blueSlider.addEventListener("input", updateImageColor);
-        updateButton.addEventListener("click", updateImage);
-        imageUploadInput.addEventListener("
+      const inputImagem = document.getElementById('input-imagem');
+      const imagem = document.getElementById('imagem');
+      const medidorVermelho = document.getElementById('medidor-vermelho');
+      const medidorVerde = document.getElementById('medidor-verde');
+      const medidorAzul = document.getElementById('medidor-azul');
+
+      inputImagem.addEventListener('change', function() {
+        const file = inputImagem.files[0];
+        const reader = new FileReader();
+        reader.addEventListener('load', function() {
+          imagem.src = reader.result;
+        });
+        reader.readAsDataURL(file);
+      });
+
+      function atualizarCor() {
+        const vermelho = medidorVermelho.value;
+        const verde = medidorVerde.value;
+        const azul = medidorAzul.value;
+        imagem.style.backgroundColor = `rgb(${vermelho}, ${verde}, ${azul})`;
+      }
+
+      medidorVermelho.addEventListener('input', atualizarCor);
+      medidorVerde.addEventListener('input', atualizarCor);
+      medidorAzul.addEventListener('input', atualizarCor);
+    </script>
+  </body>
+</html>
