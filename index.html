@@ -1,31 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Editor de Imagens para Daltônicos</title>
+  <title>Editor de Imagens</title>
   <meta charset="UTF-8">
   <style>
     body {
       font-family: Arial, sans-serif;
       text-align: center;
-      background-color: #f7f7f7;
-    }
-
-    h1 {
-      margin-top: 50px;
     }
 
     #upload-container {
       margin-top: 50px;
-    }
-
-    .button {
-      display: inline-block;
-      padding: 10px 20px;
-      background-color: #007bff;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
     }
 
     #image-container {
@@ -60,17 +45,33 @@
       margin-bottom: 5px;
       font-weight: bold;
     }
+
+    #options-container {
+      margin-top: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .option-button {
+      margin: 0 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: none;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
-  <h1>Editor de Imagens para Daltônicos</h1>
+  <h1>Editor de Imagens</h1>
   <div id="upload-container">
     <label for="upload" class="button">Selecionar Imagem</label>
-    <input type="file" id="upload" accept="image/*">
+    <input type="file" id="upload" accept="image/*" style="display:none">
     <br>
     <label for="image-url">URL da Imagem:</label>
     <input type="text" id="image-url">
-    <button id="load-image" class="button">Carregar</button>
+    <button id="load-image">Carregar</button>
   </div>
   <div id="image-container">
     <img id="image-preview">
@@ -78,19 +79,108 @@
   <div id="color-sliders">
     <div class="color-slider">
       <label for="red-slider">Vermelho</label>
-      <input type="range" min="0" max="255" step="1" value="0" id="red-slider">
+      <input type="range" min="0" max="255" step="0.1" value="0" id="red-slider">
+      <span id="red-percentage">0%</span>
     </div>
     <div class="color-slider">
       <label for="green-slider">Verde</label>
-      <input type="range" min="0" max="255" step="1" value="0" id="green-slider">
+      <input type="range" min="0" max="255" step="0.1" value="0" id="green-slider">
+      <span id="green-percentage">0%</span>
     </div>
     <div class="color-slider">
       <label for="blue-slider">Azul</label>
-      <input type="range" min="0" max="255" step="1" value="0" id="blue-slider">
+      <input type="range" min="0" max="255" step="0.1" value="0" id="blue-slider">
+      <span id="blue-percentage">0%</span>
     </div>
   </div>
+  <div id="options-container">
+    <button class="option-button" id="normal-option">Normal</button>
+    <button class="option-button" id="protanopia-option">Protanopia</button>
+    <button class="option-button" id="deuteranopia-option">Deuteranopia</button>
+    <button class="option-button" id="tritanopia-option">Tritanopia</button>
+  </div>
   <script>
-    // Seu código JavaScript existente
+    const uploadInput = document.getElementById('upload');
+    const imageUrlInput = document.getElementById('image-url');
+    const loadImageButton = document.getElementById('load-image');
+    const imagePreview = document.getElementById('image-preview');
+    const redSlider = document.getElementById('red-slider');
+    const greenSlider = document.getElementById('green-slider');
+    const blueSlider = document.getElementById('blue-slider');
+    const redPercentage = document.getElementById('red-percentage');
+    const greenPercentage = document.getElementById('green-percentage');
+    const bluePercentage = document.getElementById('blue-percentage');
+    const normalOption = document.getElementById('normal-option');
+    const protanopiaOption = document.getElementById('protanopia-option');
+    const deuteranopiaOption = document.getElementById('deuteranopia-option');
+    const tritanopiaOption = document.getElementById('tritanopia-option');
+
+    function loadImageFromInput(event) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.addEventListener('load', function() {
+        imagePreview.src = reader.result;
+      });
+      reader.readAsDataURL(file);
+    }
+
+    function loadImageFromUrl() {
+      const imageUrl = imageUrlInput.value;
+      imagePreview.src = imageUrl;
+    }
+
+    function updateColorPreview() {
+      const red = redSlider.value;
+      const green = greenSlider.value;
+      const blue = blueSlider.value;
+      imagePreview.style.filter = `rgb(${red}, ${green}, ${blue})`;
+    }
+
+    function updateColorPercentage() {
+      const red = redSlider.value;
+      const green = greenSlider.value;
+      const blue = blueSlider.value;
+      redPercentage.textContent = `${red}%`;
+      greenPercentage.textContent = `${green}%`;
+      bluePercentage.textContent = `${blue}%`;
+    }
+
+    function setSliderValues(red, green, blue) {
+      redSlider.value = red;
+      greenSlider.value = green;
+      blueSlider.value = blue;
+      updateColorPreview();
+      updateColorPercentage();
+    }
+
+    function setNormalOption() {
+      setSliderValues(0, 0, 0);
+    }
+
+    function setProtanopiaOption() {
+      setSliderValues(0, 56.1, 0);
+    }
+
+    function setDeuteranopiaOption() {
+      setSliderValues(10.8, 0, 42.2);
+    }
+
+    function setTritanopiaOption() {
+      setSliderValues(1.2, 1.2, 100);
+    }
+
+    uploadInput.addEventListener('change', loadImageFromInput);
+    loadImageButton.addEventListener('click', loadImageFromUrl);
+    redSlider.addEventListener('input', updateColorPreview);
+    greenSlider.addEventListener('input', updateColorPreview);
+    blueSlider.addEventListener('input', updateColorPreview);
+    redSlider.addEventListener('input', updateColorPercentage);
+    greenSlider.addEventListener('input', updateColorPercentage);
+    blueSlider.addEventListener('input', updateColorPercentage);
+    normalOption.addEventListener('click', setNormalOption);
+    protanopiaOption.addEventListener('click', setProtanopiaOption);
+    deuteranopiaOption.addEventListener('click', setDeuteranopiaOption);
+    tritanopiaOption.addEventListener('click', setTritanopiaOption);
   </script>
 </body>
 </html>
