@@ -125,10 +125,10 @@
     }
 
     function updateImageColor() {
-      const redValue = redSlider.value * 2.55;
-      const greenValue = greenSlider.value * 2.55;
-      const blueValue = blueSlider.value * 2.55;
-      imagePreview.style.filter = `rgb(${redValue}%, ${greenValue}%, ${blueValue}%)`;
+      const redValue = (redSlider.value / 100) * 255;
+      const greenValue = (greenSlider.value / 100) * 255;
+      const blueValue = (blueSlider.value / 100) * 255;
+      imagePreview.style.filter = `rgb(${redValue}, ${greenValue}, ${blueValue})`;
     }
 
     function setSliderValues(red, green, blue) {
