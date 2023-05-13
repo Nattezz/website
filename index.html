@@ -24,13 +24,20 @@
         <input type="range" id="blue" min="0" max="255" value="0" step="1">
     </div>
     <br>
-    <img id="colorImage" src="https://i.imgur.com/example.jpg">
+    <div>
+        <label for="imageUrl">URL da Imagem:</label>
+        <input type="text" id="imageUrl" placeholder="Insira o URL da imagem">
+        <button onclick="updateImage()">Atualizar Imagem</button>
+    </div>
+    <br>
+    <img id="colorImage">
     
     <script>
         const redSlider = document.getElementById("red");
         const greenSlider = document.getElementById("green");
         const blueSlider = document.getElementById("blue");
         const colorImage = document.getElementById("colorImage");
+        const imageUrlInput = document.getElementById("imageUrl");
         
         redSlider.addEventListener("input", updateImageColor);
         greenSlider.addEventListener("input", updateImageColor);
@@ -47,6 +54,11 @@
                                       brightness(${redValue}%) 
                                       sepia(${greenValue}%) 
                                       saturate(${blueValue}%)`;
+        }
+        
+        function updateImage() {
+            const imageUrl = imageUrlInput.value;
+            colorImage.src = imageUrl;
         }
     </script>
 </body>
