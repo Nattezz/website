@@ -91,47 +91,6 @@
   </div>
   <script>
     // Seu código JavaScript existente
-  window.addEventListener('DOMContentLoaded', function() {
-  const uploadInput = document.getElementById('upload');
-  const imageUrlInput = document.getElementById('image-url');
-  const loadImageButton = document.getElementById('load-image');
-  const imagePreview = document.getElementById('image-preview');
-  const redSlider = document.getElementById('red-slider');
-  const greenSlider = document.getElementById('green-slider');
-  const blueSlider = document.getElementById('blue-slider');
-
-  function loadImageFromInput(event) {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.addEventListener('load', function() {
-      imagePreview.src = reader.result;
-    });
-    reader.readAsDataURL(file);
-  }
-
-  function loadImageFromUrl() {
-    const imageUrl = imageUrlInput.value;
-    imagePreview.src = imageUrl;
-  }
-
-  function updateImageColor() {
-    const redValue = redSlider.value;
-    const greenValue = greenSlider.value;
-    const blueValue = blueSlider.value;
-
-    // Aplicar a nova cor à imagem
-    const updatedColor = `rgb(${redValue}, ${greenValue}, ${blueValue})`;
-    imagePreview.style.filter = `hue-rotate(0) sepia(1) saturate(5) brightness(5) contrast(5) drop-shadow(2px 4px 6px ${updatedColor})`;
-  }
-
-  // Atualizar a cor da imagem sempre que um slider for movido
-  redSlider.addEventListener('input', updateImageColor);
-  greenSlider.addEventListener('input', updateImageColor);
-  blueSlider.addEventListener('input', updateImageColor);
-
-  uploadInput.addEventListener('change', loadImageFromInput);
-  loadImageButton.addEventListener('click', loadImageFromUrl);
-});
   </script>
 </body>
 </html>
