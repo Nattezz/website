@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Editor de Imagens</title>
+  <title>Editor de Imagens para Daltônicos</title>
   <meta charset="UTF-8">
   <style>
     body {
       font-family: Arial, sans-serif;
       text-align: center;
+      background-color: #f2f2f2;
     }
 
     #upload-container {
@@ -46,25 +47,25 @@
       font-weight: bold;
     }
 
-    #options-container {
+    .option-buttons {
       margin-top: 50px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
     }
 
     .option-button {
-      margin: 0 10px;
+      margin: 0 5px;
       padding: 10px 20px;
       font-size: 16px;
-      border-radius: 5px;
+      font-weight: bold;
       border: none;
+      border-radius: 5px;
+      background-color: #4CAF50;
+      color: #fff;
       cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <h1>Editor de Imagens</h1>
+  <h1>Editor de Imagens para Daltônicos</h1>
   <div id="upload-container">
     <label for="upload" class="button">Selecionar Imagem</label>
     <input type="file" id="upload" accept="image/*" style="display:none">
@@ -79,21 +80,18 @@
   <div id="color-sliders">
     <div class="color-slider">
       <label for="red-slider">Vermelho</label>
-      <input type="range" min="0" max="255" step="0.1" value="0" id="red-slider">
-      <span id="red-percentage">0%</span>
+      <input type="range" min="0" max="100" value="0" step="1" id="red-slider">
     </div>
     <div class="color-slider">
       <label for="green-slider">Verde</label>
-      <input type="range" min="0" max="255" step="0.1" value="0" id="green-slider">
-      <span id="green-percentage">0%</span>
+      <input type="range" min="0" max="100" value="0" step="1" id="green-slider">
     </div>
     <div class="color-slider">
       <label for="blue-slider">Azul</label>
-      <input type="range" min="0" max="255" step="0.1" value="0" id="blue-slider">
-      <span id="blue-percentage">0%</span>
+      <input type="range" min="0" max="100" value="0" step="1" id="blue-slider">
     </div>
   </div>
-  <div id="options-container">
+  <div class="option-buttons">
     <button class="option-button" id="normal-option">Normal</button>
     <button class="option-button" id="protanopia-option">Protanopia</button>
     <button class="option-button" id="deuteranopia-option">Deuteranopia</button>
@@ -107,9 +105,6 @@
     const redSlider = document.getElementById('red-slider');
     const greenSlider = document.getElementById('green-slider');
     const blueSlider = document.getElementById('blue-slider');
-    const redPercentage = document.getElementById('red-percentage');
-    const greenPercentage = document.getElementById('green-percentage');
-    const bluePercentage = document.getElementById('blue-percentage');
     const normalOption = document.getElementById('normal-option');
     const protanopiaOption = document.getElementById('protanopia-option');
     const deuteranopiaOption = document.getElementById('deuteranopia-option');
@@ -129,58 +124,48 @@
       imagePreview.src = imageUrl;
     }
 
-    function updateColorPreview() {
-      const red = redSlider.value;
-      const green = greenSlider.value;
-      const blue = blueSlider.value;
-      imagePreview.style.filter = `rgb(${red}, ${green}, ${blue})`;
-    }
-
-    function updateColorPercentage() {
-      const red = redSlider.value;
-      const green = greenSlider.value;
-      const blue = blueSlider.value;
-      redPercentage.textContent = `${red}%`;
-      greenPercentage.textContent = `${green}%`;
-      bluePercentage.textContent = `${blue}%`;
+    function updateImageColor() {
+      const redValue = redSlider.value * 2.55;
+      const greenValue = greenSlider.value * 2.55;
+      const blueValue = blueSlider.value * 2.55;
+      imagePreview.style.filter = `rgb(${redValue}%, ${greenValue}%, ${blueValue}%)`;
     }
 
     function setSliderValues(red, green, blue) {
-      redSlider.value = red;
-      greenSlider.value = green;
-      blueSlider.value = blue;
-      updateColorPreview();
-      updateColorPercentage();
+      redSlider.value = red / 2.55;
+      greenSlider.value = green / 2.55;
+      blueSlider.value = blue / 2.55;
     }
 
-    function setNormalOption() {
-      setSliderValues(0, 0, 0);
+    function applyNormalOption() {
+      setSliderValues(100, 100, 100);
+      updateImageColor();
     }
 
-    function setProtanopiaOption() {
-      setSliderValues(0, 56.1, 0);
+    function applyProtanopiaOption() {
+      setSliderValues(56.4, 43.16, 0);
+      updateImageColor();
     }
 
-    function setDeuteranopiaOption() {
-      setSliderValues(10.8, 0, 42.2);
+    function applyDeuteranopiaOption() {
+      setSliderValues(62.74, 37.26, 0);
+      updateImageColor();
     }
 
-    function setTritanopiaOption() {
-      setSliderValues(1.2, 1.2, 100);
+    function applyTritanopiaOption() {
+      setSliderValues(95.6, 0, 4.08);
+      updateImageColor();
     }
 
     uploadInput.addEventListener('change', loadImageFromInput);
     loadImageButton.addEventListener('click', loadImageFromUrl);
-    redSlider.addEventListener('input', updateColorPreview);
-    greenSlider.addEventListener('input', updateColorPreview);
-    blueSlider.addEventListener('input', updateColorPreview);
-    redSlider.addEventListener('input', updateColorPercentage);
-    greenSlider.addEventListener('input', updateColorPercentage);
-    blueSlider.addEventListener('input', updateColorPercentage);
-    normalOption.addEventListener('click', setNormalOption);
-    protanopiaOption.addEventListener('click', setProtanopiaOption);
-    deuteranopiaOption.addEventListener('click', setDeuteranopiaOption);
-    tritanopiaOption.addEventListener('click', setTritanopiaOption);
+    redSlider.addEventListener('input', updateImageColor);
+    greenSlider.addEventListener('input', updateImageColor);
+    blueSlider.addEventListener('input', updateImageColor);
+    normalOption.addEventListener('click', applyNormalOption);
+    protanopiaOption.addEventListener('click', applyProtanopiaOption);
+    deuteranopiaOption.addEventListener('click', applyDeuteranopiaOption);
+    tritanopiaOption.addEventListener('click', applyTritanopiaOption);
   </script>
 </body>
 </html>
