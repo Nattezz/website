@@ -32,7 +32,7 @@
             width: 100%;
         }
         
-        #imageUrl {
+        #imageUpload {
             width: 100%;
             padding: 8px;
             border: 1px solid #ccc;
@@ -79,8 +79,8 @@
             <input type="range" id="blue" min="0" max="255" value="0" step="1">
         </div>
         <div>
-            <label for="imageUrl">URL da Imagem:</label>
-            <input type="text" id="imageUrl" placeholder="Insira o URL da imagem">
+            <label for="imageUpload">Selecione uma imagem:</label>
+            <input type="file" id="imageUpload">
             <button id="updateButton">Atualizar Imagem</button>
         </div>
         <img id="colorImage">
@@ -91,9 +91,11 @@
         const greenSlider = document.getElementById("green");
         const blueSlider = document.getElementById("blue");
         const colorImage = document.getElementById("colorImage");
-        const imageUrlInput = document.getElementById("imageUrl");
+        const imageUploadInput = document.getElementById("imageUpload");
         const updateButton = document.getElementById("updateButton");
         
         redSlider.addEventListener("input", updateImageColor);
         greenSlider.addEventListener("input", updateImageColor);
-        blueSlider.addEventListener("input
+        blueSlider.addEventListener("input", updateImageColor);
+        updateButton.addEventListener("click", updateImage);
+        imageUploadInput.addEventListener("
