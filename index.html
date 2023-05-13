@@ -3,34 +3,88 @@
 <head>
     <title>Medidores de Cores</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f1f1;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        label {
+            font-weight: bold;
+        }
+        
+        input[type="range"] {
+            width: 100%;
+        }
+        
+        #imageUrl {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-top: 10px;
+        }
+        
+        #updateButton {
+            display: block;
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        
         img {
-            width: 300px;
-            height: 300px;
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin-top: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
 <body>
-    <h1>Medidores de Cores</h1>
-    <div>
-        <label for="red">Vermelho:</label>
-        <input type="range" id="red" min="0" max="255" value="0" step="1">
+    <div class="container">
+        <h1>Medidores de Cores</h1>
+        <div>
+            <label for="red">Vermelho:</label>
+            <input type="range" id="red" min="0" max="255" value="0" step="1">
+        </div>
+        <div>
+            <label for="green">Verde:</label>
+            <input type="range" id="green" min="0" max="255" value="0" step="1">
+        </div>
+        <div>
+            <label for="blue">Azul:</label>
+            <input type="range" id="blue" min="0" max="255" value="0" step="1">
+        </div>
+        <div>
+            <label for="imageUrl">URL da Imagem:</label>
+            <input type="text" id="imageUrl" placeholder="Insira o URL da imagem">
+            <button id="updateButton">Atualizar Imagem</button>
+        </div>
+        <img id="colorImage">
     </div>
-    <div>
-        <label for="green">Verde:</label>
-        <input type="range" id="green" min="0" max="255" value="0" step="1">
-    </div>
-    <div>
-        <label for="blue">Azul:</label>
-        <input type="range" id="blue" min="0" max="255" value="0" step="1">
-    </div>
-    <br>
-    <div>
-        <label for="imageUrl">URL da Imagem:</label>
-        <input type="text" id="imageUrl" placeholder="Insira o URL da imagem">
-        <button onclick="updateImage()">Atualizar Imagem</button>
-    </div>
-    <br>
-    <img id="colorImage">
     
     <script>
         const redSlider = document.getElementById("red");
@@ -38,28 +92,11 @@
         const blueSlider = document.getElementById("blue");
         const colorImage = document.getElementById("colorImage");
         const imageUrlInput = document.getElementById("imageUrl");
+        const updateButton = document.getElementById("updateButton");
         
         redSlider.addEventListener("input", updateImageColor);
         greenSlider.addEventListener("input", updateImageColor);
         blueSlider.addEventListener("input", updateImageColor);
+        updateButton.addEventListener("click", updateImage);
         
-        function updateImageColor() {
-            const redValue = redSlider.value;
-            const greenValue = greenSlider.value;
-            const blueValue = blueSlider.value;
-            
-            colorImage.style.filter = `brightness(100%) sepia(0%) saturate(100%) hue-rotate(0deg) 
-                                      opacity(100%) contrast(100%) 
-                                      invert(0%) grayscale(0%) 
-                                      brightness(${redValue}%) 
-                                      sepia(${greenValue}%) 
-                                      saturate(${blueValue}%)`;
-        }
-        
-        function updateImage() {
-            const imageUrl = imageUrlInput.value;
-            colorImage.src = imageUrl;
-        }
-    </script>
-</body>
-</html>
+       
