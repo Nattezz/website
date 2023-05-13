@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Medidores de Cores</title>
+    <style>
+        img {
+            width: 300px;
+            height: 300px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Medidores de Cores</h1>
+    <div>
+        <label for="red">Vermelho:</label>
+        <input type="range" id="red" min="0" max="255" value="0" step="1">
+    </div>
+    <div>
+        <label for="green">Verde:</label>
+        <input type="range" id="green" min="0" max="255" value="0" step="1">
+    </div>
+    <div>
+        <label for="blue">Azul:</label>
+        <input type="range" id="blue" min="0" max="255" value="0" step="1">
+    </div>
+    <br>
+    <img id="colorImage" src="https://example.com/path/to/your/image.jpg">
+    
+    <script>
+        const redSlider = document.getElementById("red");
+        const greenSlider = document.getElementById("green");
+        const blueSlider = document.getElementById("blue");
+        const colorImage = document.getElementById("colorImage");
+        
+        redSlider.addEventListener("input", updateImageColor);
+        greenSlider.addEventListener("input", updateImageColor);
+        blueSlider.addEventListener("input", updateImageColor);
+        
+        function updateImageColor() {
+            const redValue = redSlider.value;
+            const greenValue = greenSlider.value;
+            const blueValue = blueSlider.value;
+            
+            colorImage.style.filter = `brightness(100%) sepia(0%) saturate(100%) hue-rotate(0deg) 
+                                      opacity(100%) contrast(100%) 
+                                      invert(0%) grayscale(0%) 
+                                      brightness(${redValue}%) 
+                                      sepia(${greenValue}%) 
+                                      saturate(${blueValue}%)`;
+        }
+    </script>
+</body>
+</html>
