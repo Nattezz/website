@@ -7,20 +7,26 @@
       body {
         font-family: Arial, sans-serif;
         text-align: center;
-        padding: 20px;
       }
 
       #upload-container {
-        margin-bottom: 20px;
+        margin-top: 50px;
+      }
+
+      #image-container {
+        margin-top: 50px;
       }
 
       #image-preview {
         max-width: 500px;
         max-height: 500px;
-        margin-bottom: 20px;
+        border: 2px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
       }
 
       #color-sliders {
+        margin-top: 50px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -44,7 +50,8 @@
   <body>
     <h1>Editor de Imagens</h1>
     <div id="upload-container">
-      <input type="file" id="upload" accept="image/*">
+      <label for="upload" class="button">Selecionar Imagem</label>
+      <input type="file" id="upload" accept="image/*" style="display:none">
     </div>
     <div id="image-container">
       <img id="image-preview">
@@ -83,7 +90,7 @@
         const redValue = redSlider.value;
         const greenValue = greenSlider.value;
         const blueValue = blueSlider.value;
-        imagePreview.style.filter = `rgb(${redValue}%, ${greenValue}%, ${blueValue}%)`;
+        imagePreview.style.filter = `rgb(${redValue}, ${greenValue}, ${blueValue})`;
       }
 
       redSlider.addEventListener('input', updateImageColor);
