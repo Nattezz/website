@@ -1,28 +1,94 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Selecionar e alterar cores de imagem</title>
+    <title>Editor de Imagens</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 20px;
+      }
+
+      #upload-container {
+        margin-bottom: 20px;
+      }
+
+      #image-preview {
+        max-width: 500px;
+        max-height: 500px;
+        margin-bottom: 20px;
+      }
+
+      #color-sliders {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .color-slider {
+        margin: 0 10px;
+      }
+
+      .color-slider input[type="range"] {
+        width: 200px;
+      }
+
+      .color-slider label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+    </style>
   </head>
   <body>
+    <h1>Editor de Imagens</h1>
+    <div id="upload-container">
+      <input type="file" id="upload" accept="image/*">
+    </div>
     <div id="image-container">
-      <img id="selected-image" src="#" alt="Selecione uma imagem">
+      <img id="image-preview">
     </div>
     <div id="color-sliders">
-      <div class="color-slider red">
+      <div class="color-slider">
         <label for="red-slider">Vermelho</label>
         <input type="range" min="0" max="255" value="0" id="red-slider">
       </div>
-      <div class="color-slider green">
+      <div class="color-slider">
         <label for="green-slider">Verde</label>
         <input type="range" min="0" max="255" value="0" id="green-slider">
       </div>
-      <div class="color-slider blue">
+      <div class="color-slider">
         <label for="blue-slider">Azul</label>
         <input type="range" min="0" max="255" value="0" id="blue-slider">
       </div>
     </div>
-    <link rel="stylesheet" href="style.css">
+    <script>
+      const uploadInput = document.getElementById('upload');
+      const imagePreview = document.getElementById('image-preview');
+      const redSlider = document.getElementById('red-slider');
+      const greenSlider = document.getElementById('green-slider');
+      const blueSlider = document.getElementById('blue-slider');
+
+      uploadInput.addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.addEventListener('load', function() {
+          imagePreview.src = reader.result;
+        });
+        reader.readAsDataURL(file);
+      });
+
+      function updateImageColor() {
+        const redValue = redSlider.value;
+        const greenValue = greenSlider.value;
+        const blueValue = blueSlider.value;
+        imagePreview.style.filter = `rgb(${redValue}%, ${greenValue}%, ${blueValue}%)`;
+      }
+
+      redSlider.addEventListener('input', updateImageColor);
+      greenSlider.addEventListener('input', updateImageColor);
+      blueSlider.addEventListener('input', updateImageColor);
+    </script>
   </body>
 </html>
