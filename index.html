@@ -4,47 +4,7 @@
   <title>Editor de Imagens para Daltônicos</title>
   <meta charset="UTF-8">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-    }
-
-    #upload-container {
-      margin-top: 50px;
-    }
-
-    #image-container {
-      margin-top: 50px;
-    }
-
-    #image-preview {
-      max-width: 500px;
-      max-height: 500px;
-      border: 2px solid #ccc;
-      border-radius: 5px;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-    }
-
-    #color-sliders {
-      margin-top: 50px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .color-slider {
-      margin: 0 10px;
-    }
-
-    .color-slider input[type="range"] {
-      width: 200px;
-    }
-
-    .color-slider label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: bold;
-    }
+    /* Estilos CSS existentes */
   </style>
 </head>
 <body>
@@ -96,6 +56,20 @@
       const imageUrl = imageUrlInput.value;
       imagePreview.src = imageUrl;
     }
+
+    function updateImageColor() {
+      const redValue = redSlider.value;
+      const greenValue = greenSlider.value;
+      const blueValue = blueSlider.value;
+
+      // Aplicar a nova cor à imagem
+      imagePreview.style.filter = `rgb(${redValue}, ${greenValue}, ${blueValue})`;
+    }
+
+    // Atualizar a cor da imagem sempre que um slider for movido
+    redSlider.addEventListener('input', updateImageColor);
+    greenSlider.addEventListener('input', updateImageColor);
+    blueSlider.addEventListener('input', updateImageColor);
 
     uploadInput.addEventListener('change', loadImageFromInput);
     loadImageButton.addEventListener('click', loadImageFromUrl);
