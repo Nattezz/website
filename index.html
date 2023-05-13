@@ -63,7 +63,8 @@
       const blueValue = blueSlider.value;
 
       // Aplicar a nova cor à imagem
-      imagePreview.style.filter = `rgb(${redValue}, ${greenValue}, ${blueValue})`;
+      const updatedColor = `rgb(${redValue}, ${greenValue}, ${blueValue})`;
+      imagePreview.style.filter = `hue-rotate(0) sepia(1) saturate(5) brightness(5) contrast(5) drop-shadow(2px 4px 6px ${updatedColor})`;
     }
 
     // Atualizar a cor da imagem sempre que um slider for movido
