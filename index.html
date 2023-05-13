@@ -1,101 +1,104 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Editor de Imagens</title>
-    <meta charset="UTF-8">
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        text-align: center;
-      }
+<head>
+  <title>Editor de Imagens para Daltônicos</title>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
 
-      #upload-container {
-        margin-top: 50px;
-      }
+    #upload-container {
+      margin-top: 50px;
+    }
 
-      #image-container {
-        margin-top: 50px;
-      }
+    #image-container {
+      margin-top: 50px;
+    }
 
-      #image-preview {
-        max-width: 500px;
-        max-height: 500px;
-        border: 2px solid #ccc;
-        border-radius: 5px;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-      }
+    #image-preview {
+      max-width: 500px;
+      max-height: 500px;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    }
 
-      #color-sliders {
-        margin-top: 50px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
+    #color-sliders {
+      margin-top: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-      .color-slider {
-        margin: 0 10px;
-      }
+    .color-slider {
+      margin: 0 10px;
+    }
 
-      .color-slider input[type="range"] {
-        width: 200px;
-      }
+    .color-slider input[type="range"] {
+      width: 200px;
+    }
 
-      .color-slider label {
-        display: block;
-        margin-bottom: 5px;
-        font-weight: bold;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Editor de Imagens</h1>
-    <div id="upload-container">
-      <label for="upload" class="button">Selecionar Imagem</label>
-      <input type="file" id="upload" accept="image/*" style="display:none">
+    .color-slider label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Editor de Imagens para Daltônicos</h1>
+  <div id="upload-container">
+    <label for="upload" class="button">Selecionar Imagem</label>
+    <input type="file" id="upload" accept="image/*" style="display:none">
+    <br>
+    <label for="image-url">URL da Imagem:</label>
+    <input type="text" id="image-url">
+    <button id="load-image">Carregar</button>
+  </div>
+  <div id="image-container">
+    <img id="image-preview">
+  </div>
+  <div id="color-sliders">
+    <div class="color-slider">
+      <label for="red-slider">Vermelho</label>
+      <input type="range" min="0" max="255" value="0" id="red-slider">
     </div>
-    <div id="image-container">
-      <img id="image-preview">
+    <div class="color-slider">
+      <label for="green-slider">Verde</label>
+      <input type="range" min="0" max="255" value="0" id="green-slider">
     </div>
-    <div id="color-sliders">
-      <div class="color-slider">
-        <label for="red-slider">Vermelho</label>
-        <input type="range" min="0" max="255" value="0" id="red-slider">
-      </div>
-      <div class="color-slider">
-        <label for="green-slider">Verde</label>
-        <input type="range" min="0" max="255" value="0" id="green-slider">
-      </div>
-      <div class="color-slider">
-        <label for="blue-slider">Azul</label>
-        <input type="range" min="0" max="255" value="0" id="blue-slider">
-      </div>
+    <div class="color-slider">
+      <label for="blue-slider">Azul</label>
+      <input type="range" min="0" max="255" value="0" id="blue-slider">
     </div>
-    <script>
-      const uploadInput = document.getElementById('upload');
-      const imagePreview = document.getElementById('image-preview');
-      const redSlider = document.getElementById('red-slider');
-      const greenSlider = document.getElementById('green-slider');
-      const blueSlider = document.getElementById('blue-slider');
+  </div>
+  <script>
+    const uploadInput = document.getElementById('upload');
+    const imageUrlInput = document.getElementById('image-url');
+    const loadImageButton = document.getElementById('load-image');
+    const imagePreview = document.getElementById('image-preview');
+    const redSlider = document.getElementById('red-slider');
+    const greenSlider = document.getElementById('green-slider');
+    const blueSlider = document.getElementById('blue-slider');
 
-      uploadInput.addEventListener('change', function(event) {
-        const file = event.target.files[0];
-        const reader = new FileReader();
-        reader.addEventListener('load', function() {
-          imagePreview.src = reader.result;
-        });
-        reader.readAsDataURL(file);
+    function loadImageFromInput(event) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.addEventListener('load', function() {
+        imagePreview.src = reader.result;
       });
+      reader.readAsDataURL(file);
+    }
 
-      function updateImageColor() {
-        const redValue = redSlider.value;
-        const greenValue = greenSlider.value;
-        const blueValue = blueSlider.value;
-        imagePreview.style.filter = `rgb(${redValue}, ${greenValue}, ${blueValue})`;
-      }
+    function loadImageFromUrl() {
+      const imageUrl = imageUrlInput.value;
+      imagePreview.src = imageUrl;
+    }
 
-      redSlider.addEventListener('input', updateImageColor);
-      greenSlider.addEventListener('input', updateImageColor);
-      blueSlider.addEventListener('input', updateImageColor);
-    </script>
-  </body>
+    uploadInput.addEventListener('change', loadImageFromInput);
+    loadImageButton.addEventListener('click', loadImageFromUrl);
+  </script>
+</body>
 </html>
